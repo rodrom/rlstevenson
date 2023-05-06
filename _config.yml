@@ -1,5 +1,5 @@
 title: Consejos de aprendiz perpetuo
-
+baseurl: "/rlstevenson" # the subpath of your site, e.g. /blog
 collections:
   authors:
     output: true
