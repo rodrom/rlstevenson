@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="/assets/css/styles.css">
   </head>
   <body>
-    {% include navigation.html %}
+    {% if jekyll.environment == "development" %}
+      {% include navigation.html %}
+    {% else %}
+      {% include navigation_github.html %}
+    {% endif %}
     {{ content }}
   </body>
 </html>
