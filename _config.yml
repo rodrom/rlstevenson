@@ -4,7 +4,7 @@ collections:
     output: true
 
 domain: rodrom.github.io       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
-url: https://romrom.github.io  # the base hostname and protocol for your site, e.g. http://example.com
+url: https://rodrom.github.io  # the base hostname and protocol for your site, e.g. http://example.com
 baseurl: /rlstevenson/      # place folder name if the site is served in a subfolder
 
 defaults:
