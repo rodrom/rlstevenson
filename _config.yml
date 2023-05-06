@@ -6,16 +6,16 @@ collections:
 
 defaults:
   - scope:
-      path: ""
+      path: "/rlstevenson"
       type: "authors"
     values:
       layout: "author"
   - scope:
-      path: ""
+      path: "/rlstevenson"
       type: "posts"
     values:
       layout: "post"
   - scope:
-      path: ""
+      path: "/rlstevenson"
     values:
       layout: "default"
