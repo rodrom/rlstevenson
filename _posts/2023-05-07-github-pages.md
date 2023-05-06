@@ -1,6 +1,6 @@
 ---
+title: "Configurar Github Pages de un repositorio como éste"
 author: rodrom
-title: Configurar Github Pages de un repositorio como éste
 ---
 
 Recién iniciado el séptimo día del mes quinto del duomilésimovigésimotercer ciclo
