@@ -1,14 +1,22 @@
 ---
 ---
 <!doctype html>
-<html>
+<html lang="{{ site.lang | default: "es-ES" }}">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>{{ page.title }}</title>
     <link rel="stylesheet" href="/assets/css/style.css">
   </head>
   <body>
-    {% include navigation.html %}
-    {{ content }}
+    <div id="header">
+      {% include navigation.html %}
+    </div>
+    <div class="wrapper">
+      <section>
+        {{ content }}
+      </section>
+    </div>
   </body>
 </html>
