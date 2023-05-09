@@ -3,74 +3,66 @@ title: "Configurar Github Pages de un repositorio como este"
 author: rodrom
 ---
 
-Recién iniciado el séptimo día del mes quinto del duomilesimo y vigésimotercer ciclo
-del tercer planeta del sistema solar en el horario de Europa Occidental Central,
-he conseguido, creo, que se necesita para configurar correctamente
-los enlaces, relativos o absolutos, de una web [**Jekyll**](https://jekyllrb.com),
-usando como hosting el servicio *gratuito* de [Github Pages](https://pages.github.com/), propiedad de Microsoft.
+Para poder desarrollar y testear en un entorno local tu cuaderno de bitácoras virtual
+usando la aplicación de microblogging [Jekyll](https://jekyllrb.com/) mediante la configuración
+por defecto que ofrece [Github](https://github.com) para un repositorio que reside como subdirectorio en
+la dirección por defecto de [Github Pages](https://docs.github.com/en/pages).
 
-Ignoro porque le han dado este nombre de *Jekyll*, ¿quizás tenga que ver con que Internet,
-al igual que en la novela del escritor nacido ayer, 6 de mayo, [**Robert Louis Stevenson**](https://es.wikipedia.org/wiki/Robert_Louis_Stevenson),
-en [*Dr. Jekyll y Mr. Hyde*](https://www.gutenberg.org/ebooks/43), es como una pócima que saca lo peor de si mismos a algunos humanos?
-Ni idea. No conozco al señor, [Tom Preston Werner](https://tom.preston-werner.com/), que no creo que [diseñase este programa](https://tom.preston-werner.com/2008/11/17/blogging-like-a-hacker.html) para aumentar el ego destructor de escritores/desarrolladores informáticos.
+`https://<nombre_usuario>.github.io/<nombre_repositorio>`
 
-Si sigues las [instrucciones de instalación oficiales](https://jekyllrb.com/docs/installation/) 
-1. Configuras un entorno de desarrollo para *Jekyll*,
-  + instalar *ruby*
-  + instalar *bundle* y *jekyll*
-2. Creas una serie páginas y entradas de forma que te funciona en local
-3. Inicias un repositorio Git
-4. Lo subes a Github a un repositorio remoto de nombre arbitrario, como en mi caso [*rlstevenson*](https://github.com/rodrom/rlstevenson).
-  + Activas la opción de sea una [*Github Page*](https://docs.github.com/en/pages) y configuras los parámetros.
-  + Esperas a que se ejecute la acción por defecto de *Github Actions*
-  + Y con suerte, todo funciona.
-  + Tu proyecto ya está disponible en `https://<tu-usuario>.github.io/<el-nombre-del-repositorio>`. O en mi caso: [https://rodrom.github.io/rlstevenson]()
-  
-Es probable, que haya un conflicto entre los enlaces que se generan en la versión de desarrollo local y los que se deberían mostrar en producción.
+Es necesario configurarlo correctamente siguiendo las instrucciones oficiales, ya sea a través
+de la web de [Jekyll](https://jekyllrb.com/docs/) o por las de [Github](https://docs.github.com/en/pages/quickstart).
 
-Por ejemplo:
-Está página, que forma parte de una entrada de mi cuaderno de bitácora, que en inglés se dice *blog post* es:
-- Enlace en local: `http://localhost:4000/2023/05/07/github-pages.html`
-- Enlace en producción: `https://rodrom.github.io/rlstevenson/2023/05/07/github-pages.html`.
+Dado que los enlaces se construyen de forma distinta en local y en producción, es una posible solución, tener en cuenta los
+siguientes puntos para que funcionen en ambos entornos (desarollo-*development* y producción-*production*).
 
-La clave está en meter la parte de `rlstevenson` solo en producción, pero ignorarla, en local.
-
-He estado mirando varias páginas en Internet, esa que a veces saca cosas buenas, y otras es una perdida constante de tiempo.
-Los términos de producción y local, la verdad que están elegidos, malamente. Pero no seré yo el que cambié los términos de esta
-pseudo ciencia/ingeniería/estafa informática y su jerga. Y el caso es, volviendo al problema principal, que no he encontrado una solución clara y sencilla.
-He probado varias cosas, hasta que he llegado a la siguiente solución:
-
-1. Crear un archivo `_config.yml` con las variables necesarias de producción: `baseurl: /rlstevenson`
-2. Crear un archivo `_config_development.yml` con las variables necesarias de desarrollo local: `baseurl: ""`
-3. En cualquier lugar que haya que crear un enlace absoluto, se antepone el valor de dicha variable.
-    Usando el lenguaje [**Liquid**](https://shopify.github.io/liquid/), que es el que usa este generador de contenido estático, se podría crear los enlaces de la siguiente forma:
-
-```txt
-{{ "{{ site.baseurl " }}}}/about.html
+1. Modificar el archivo `_config.yml` con las variables necesarias, especificando las requeridas en producción, concretamente en nuestro ejemplo: `baseurl: /rlstevenson`
+```yml
+...
+domain: rodrom.github.io
+url: https://rodrom.github.io
+baseurl: /rlstevenson 
+...
 ```
->> **NOTA**: Este código es solo visible correctamente en el sitio en producción generado estáticamente, si lo estás viendo a traves de la página del fichero [markdown original](https://github.com/rodrom/rlstevenson/blob/master/_posts/2023-05-07-github-pages.md) en la web del repositorio Github, te saldrán dos *llaves* `}}` de más.
 
-Que generarían una salida final dependiente del entorno de ejecución:
+2. Crear un archivo `_config_development.yml` **solo** con las variables necesarias de desarrollo local:
+```yml
+domain: localhost
+url: http://localhost
+baseurl: ""
+```
+
+3. En cualquier lugar que haya que crear un enlace completo desde la base de sitio, se antepone el valor la variable `baseurl`.
+Usando el lenguaje [**Liquid**](https://shopify.github.io/liquid/), que es el que usa este generador de contenido estático,
+se podría crear los enlaces de la siguiente forma:
+
+```Liquid
+<a href="{{ "{{ site.baseurl " }}}}/about.html">About</a>
+```
+> **NOTA**: Este código es solo visible correctamente en el sitio en producción generado estáticamente, si lo estás viendo a traves de la página del fichero [markdown original](https://github.com/rodrom/rlstevenson/blob/master/_posts/2023-05-07-github-pages.md) en la web del repositorio Github, te saldrán dos *llaves* `}}` de más.
+
+Que generarían una salida final diferente para el atributo `href` del enlace en función del entorno de ejecución.
+
+Por ejemplo, suponiendo que el usuario de github es: [**rodrom**](https://github.com/rodrom) y el repositorio es [**rlstevenson**](https://github.com/rodrom/rlstevenson), la salida sería:
 
 - Desarrollo: `http://localhost:4000/about.html`
 - Producción: `https://rodrom.github.io/rlstevenson/about.html`
 
 Con esta solución, se requiere indicar al arrancar el servidor local que se use el fichero de configuración `_config_development.yml`.
 
-Para ello, basta ejecutar este comando: 
-`$ jekyll serve --livereload --host=127.0.0.1 --config _config_development.yml`
+Para ello, basta ejecutar este comando:
+`$ jekyll serve --livereload --host=127.0.0.1 --config _config.yml,_config_development.yml`
+Que además, te permite ver los cambios de la web cada vez que modificas un archivo.
 
-Espero que con esta lectura te hayan entrado ganas de leer a Robert Louis Stevenson,
-porque el tío escribe bastante mejor que yo y que tú.
+Hay más información en la página de Jekyll sobre [Environments](https://jekyllrb.com/docs/configuration/environments/), especialmente la opción [`--config`] que se indica al final de la página.
+
+Me despido recomendado la lectura de la historia corta del señor Robert Louis Stevenson.
 
 Os dejo con una cita de su novela *El Dr. Jekyll y Mr. Hyde* de 1886, donde se analiza la **dualidad del individuo**.
-Y creo que no se refería al móvil, ni al trastorno bipolar o maniacodepresivo de algunos.
 
->> [Henry Jekyll]
->> 
->> —No, señor —dijo—. No es de un loco. Pero la letra es muy extraña.[0]
->>
->> ORIGINAL: *“No sir,” he said: “not mad; but it is an odd hand.”*[1]
+> —No, señor —dijo—. No es de un loco. Pero la letra es muy extraña.[0]
+>
+> ORIGINAL: *“No sir,” he said: “not mad; but it is an odd hand.”*[1]
 
 [\[0\]](https://es.wikisource.org/wiki/El_caso_extra%C3%B1o_del_doctor_Jekyll/V)
 [\[1\]](https://www.gutenberg.org/cache/epub/43/pg43-images.html#chap04)
