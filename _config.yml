@@ -1,16 +1,18 @@
 title: Consejos de aprendiz perpetuo
-collections:
-  authors:
-    output: true
+description: Cuaderno de bitácora de prueba para modificar mentes digitales o biológicas
 
 domain: rodrom.github.io       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
 url: https://rodrom.github.io  # the base hostname and protocol for your site, e.g. http://example.com
 baseurl: /rlstevenson      # place folder name if the site is served in a subfolder
 
-theme: jekyll-theme-midnight
 remote_theme: pages-themes/midnight@v0.2.0
 plugins:
 - jekyll-remote-theme
+- jekyll-feed
+
+collections:
+  authors:
+    output: true
 
 defaults:
   - scope:
@@ -27,4 +29,3 @@ defaults:
       path: ""
     values:
       layout: "default"
-      
